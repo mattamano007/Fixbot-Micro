@@ -96,66 +96,91 @@ const FixBot = () => {
     <div className="font-sans antialiased">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/60">
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-8 h-auto py-3 flex flex-wrap items-center justify-between gap-4">
+        <div className="max-w-[1280px] mx-auto px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-lg flex items-center justify-center">
               <Bot className="w-5 h-5 text-white" />
             </div>
             <span className="text-lg font-bold text-slate-900">FixBot</span>
           </div>
-          <div className="flex items-center gap-4 lg:gap-8 text-sm font-medium text-slate-600 flex-wrap justify-end w-full sm:w-auto">
-          <div className="flex items-center gap-4 lg:gap-8 text-sm font-medium text-slate-600 flex-wrap justify-end w-full sm:w-auto">
+          <div className="flex items-center gap-8 text-sm font-medium text-slate-600">
             <a href="#problem" className="hover:text-slate-900 transition-colors">Problem</a>
             <a href="#how-it-works" className="hover:text-slate-900 transition-colors">How It Works</a>
             <a href="#features" className="hover:text-slate-900 transition-colors">Features</a>
-            <a href="#waitlist" className="px-4 py-2 rounded-xl border border-slate-200 hover:border-emerald-500 hover:text-emerald-600 transition-colors">
-              Join waitlist
-            </a>
+            <a href="#use-cases" className="hover:text-slate-900 transition-colors">Use Cases</a>
+            <button className="px-5 py-2 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition-colors">
+              Join Waitlist
+            </button>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center pt-24 sm:pt-20 overflow-hidden">
+      <section className="relative min-h-[90vh] flex items-center pt-16 overflow-hidden">
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-white to-emerald-50/30" />
 
         {/* Gradient orbs */}
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-emerald-400/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-teal-400/20 rounded-full blur-[120px]" />
-
-        <div className="relative max-w-[1280px] mx-auto px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12 lg:gap-12 items-center">
+        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-blue-400/20 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-purple-400/20 rounded-full blur-[120px]" />
+        
+        <div className="relative max-w-[1280px] mx-auto px-8 w-full">
+          <div className="grid grid-cols-[55%_45%] gap-12 items-center">
             {/* Left content */}
             <motion.div {...fadeUp}>
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full mb-6">
                 <Sparkles className="w-4 h-4 text-emerald-600" />
                 <span className="text-sm font-semibold text-emerald-600">AI Support Automation</span>
               </div>
-
-              <h1 className="text-[42px] sm:text-[56px] lg:text-[72px] leading-[1.05] font-bold tracking-[-0.04em] text-slate-900 mb-6">
-                Your team fixes once.<br />FixBot handles the rest.
+              
+              <h1 className="text-[72px] leading-[1.05] font-bold tracking-[-0.04em] text-slate-900 mb-6">
+                Hire on proof,<br />not promises.
               </h1>
-
-              <p className="text-lg sm:text-xl leading-[1.6] text-slate-600 max-w-[620px] mb-10">
-                Turn every support fix into discoverable content. Customers find answers before reaching support. Each resolved issue strengthens your library.
+              
+              <p className="text-[21px] leading-[1.6] text-slate-600 max-w-[520px] mb-10">
+                Give candidates a real task. Get the work, not the rehearsed answer.
               </p>
+              
+              <form onSubmit={submitWaitlist} className="flex flex-wrap gap-4 items-center">
+                <div className="flex items-center h-[56px] px-4 bg-white border border-slate-300 rounded-[14px] shadow-[0_1px_2px_rgba(0,0,0,0.04)] focus-within:border-blue-500 focus-within:shadow-[0_2px_8px_rgba(37,99,235,0.18)] transition-all duration-150 min-w-[280px]">
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="w-full h-full outline-none text-base text-slate-900 placeholder:text-slate-400"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
 
-              <WaitlistForm anchorId="waitlist" />
+                <button
+                  type="submit"
+                  disabled={status.state === 'loading'}
+                  className="h-[56px] px-8 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 text-white text-base font-semibold rounded-[14px] shadow-[0_1px_2px_rgba(0,0,0,0.08),0_8px_16px_rgba(37,99,235,0.24)] hover:shadow-[0_1px_2px_rgba(0,0,0,0.08),0_12px_24px_rgba(37,99,235,0.32)] hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-200 inline-flex items-center gap-2"
+                >
+                  {status.state === 'loading' ? 'Joining...' : 'Join the Waitlist'}
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              </form>
+              {status.message && (
+                <div className={`mt-3 text-sm ${status.state === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                  {status.message}
+                </div>
+              )}
             </motion.div>
 
-            {/* Right - Floating Dashboard Preview */}
-            <motion.div
-              className="relative w-full max-w-[520px] mx-auto"
+            {/* Right - Floating Scorecard */}
+            <motion.div 
+              className="relative"
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
               {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 via-teal-500/20 to-cyan-500/20 blur-[100px] rounded-full scale-150" />
-
-              {/* Dashboard Card */}
-              <div className="relative w-full bg-white rounded-[24px] p-6 sm:p-8 shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_4px_rgba(0,0,0,0.04),0_8px_16px_rgba(0,0,0,0.06),0_16px_32px_rgba(0,0,0,0.08)] border border-white/60 backdrop-blur-xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 blur-[100px] rounded-full scale-150" />
+              
+              {/* Scorecard */}
+              <div className="relative w-[480px] bg-white rounded-[24px] p-8 shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_4px_rgba(0,0,0,0.04),0_8px_16px_rgba(0,0,0,0.06),0_16px_32px_rgba(0,0,0,0.08)] border border-white/60 backdrop-blur-xl">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                   <div>
@@ -218,10 +243,10 @@ const FixBot = () => {
       </section>
 
       {/* Stats Bar */}
-      <section className="relative z-10 mt-12 mb-24">
-        <div className="max-w-[1100px] mx-auto px-6 sm:px-8">
+      <section className="relative z-10 -mt-16 mb-24">
+        <div className="max-w-[1100px] mx-auto px-8">
           <motion.div 
-            className="bg-white rounded-[20px] p-8 sm:p-10 shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_8px_16px_rgba(0,0,0,0.08),0_24px_48px_rgba(0,0,0,0.12)] grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8"
+            className="bg-white rounded-[20px] p-10 shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_8px_16px_rgba(0,0,0,0.08),0_24px_48px_rgba(0,0,0,0.12)] grid grid-cols-3 gap-8"
             {...fadeUp}
           >
             {[
@@ -229,11 +254,8 @@ const FixBot = () => {
               { number: '3.2x', label: 'Increase in organic traffic', sublabel: 'To support content' },
               { number: '<2min', label: 'Average resolution time', sublabel: 'With AI assistance' }
             ].map((stat, i) => (
-              <div
-                key={i}
-                className="text-center sm:border-r border-slate-200 sm:last:border-0 border-b sm:border-b-0 last:border-b-0 pb-6 sm:pb-0"
-              >
-                <div className="text-[44px] sm:text-[56px] font-bold bg-gradient-to-br from-emerald-600 to-teal-600 bg-clip-text text-transparent leading-none mb-2">
+              <div key={i} className="text-center border-r border-slate-200 last:border-0">
+                <div className="text-[56px] font-bold bg-gradient-to-br from-blue-600 to-pink-600 bg-clip-text text-transparent leading-none mb-2">
                   {stat.number}
                 </div>
                 <div className="text-[15px] sm:text-[16px] font-semibold text-slate-900 mb-1">
@@ -249,10 +271,10 @@ const FixBot = () => {
       </section>
 
       {/* Before/After Section */}
-      <section id="problem" className="py-24 sm:py-32 bg-slate-50">
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-8">
-          <motion.div
-            className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start"
+      <section id="problem" className="py-32 bg-slate-50">
+        <div className="max-w-[1280px] mx-auto px-8">
+          <motion.div 
+            className="grid grid-cols-2 gap-16 items-center"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -263,8 +285,8 @@ const FixBot = () => {
               <div className="inline-block px-4 py-2 bg-red-50 rounded-full">
                 <span className="text-[13px] font-semibold text-red-600">Without FixBot</span>
               </div>
-              <h2 className="text-[32px] sm:text-[40px] lg:text-[42px] font-bold text-slate-900 leading-[1.1]">
-                Answering the same questions.<br />Over and over.
+              <h2 className="text-[42px] font-bold text-slate-900 leading-[1.1]">
+                Interview theater.<br />Regret decisions.
               </h2>
               <div className="space-y-4">
                 {[
@@ -286,8 +308,8 @@ const FixBot = () => {
               <div className="inline-block px-4 py-2 bg-emerald-50 rounded-full">
                 <span className="text-[13px] font-semibold text-emerald-600">With FixBot</span>
               </div>
-              <h2 className="text-[32px] sm:text-[40px] lg:text-[42px] font-bold text-slate-900 leading-[1.1]">
-                Fix once.<br />Help everyone.
+              <h2 className="text-[42px] font-bold text-slate-900 leading-[1.1]">
+                Real work.<br />Confident hires.
               </h2>
               <div className="space-y-4">
                 {[
@@ -308,23 +330,23 @@ const FixBot = () => {
       </section>
 
       {/* How It Works */}
-      <section id="how-it-works" className="py-24 sm:py-32 bg-white">
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-8">
+      <section id="how-it-works" className="py-32 bg-white">
+        <div className="max-w-[1280px] mx-auto px-8">
           <motion.div className="text-center mb-20" {...fadeUp}>
-            <h2 className="text-[36px] sm:text-[46px] lg:text-[52px] font-bold text-slate-900 mb-4 leading-[1.1]">
-              How FixBot works
+            <h2 className="text-[52px] font-bold text-slate-900 mb-4 leading-[1.1]">
+              How CandidateAssessor works
             </h2>
-            <p className="text-lg sm:text-xl text-slate-600">
-              Three steps to transform your support experience.
+            <p className="text-[21px] text-slate-600">
+              Give the work. Watch the work. Decide fast.
             </p>
           </motion.div>
 
           <div className="relative">
             {/* Connecting line */}
-            <div className="absolute top-24 left-0 right-0 h-[2px] bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 opacity-30 hidden lg:block" />
-
-            <motion.div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+            <div className="absolute top-24 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 opacity-30" />
+            
+            <motion.div 
+              className="grid grid-cols-3 gap-8"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -352,16 +374,16 @@ const FixBot = () => {
               ].map((step, i) => (
                 <motion.div key={i} className="relative" variants={staggerItem}>
                   {/* Number badge */}
-                  <div className="absolute -top-12 left-8 w-16 h-16 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-[0_8px_16px_rgba(16,185,129,0.3)] z-10">
+                  <div className="absolute -top-12 left-8 w-16 h-16 bg-gradient-to-br from-blue-600 to-pink-600 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-[0_8px_16px_rgba(37,99,235,0.3)] z-10">
                     {step.number}
                   </div>
 
                   {/* Card */}
-                  <motion.div
+                  <motion.div 
                     className="bg-white rounded-[20px] p-8 pt-12 border border-slate-200 shadow-[0_2px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.08)] hover:border-slate-300 hover:-translate-y-1 transition-all duration-300"
                     whileHover={{ y: -4 }}
                   >
-                    <step.icon className="w-12 h-12 text-emerald-600 mb-4" />
+                    <step.icon className="w-12 h-12 text-blue-600 mb-4" />
                     <h3 className="text-2xl font-bold text-slate-900 mb-3">
                       {step.title}
                     </h3>
@@ -377,19 +399,19 @@ const FixBot = () => {
       </section>
 
       {/* Features */}
-      <section id="features" className="py-24 sm:py-32 bg-slate-50">
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-8">
+      <section id="features" className="py-32 bg-slate-50">
+        <div className="max-w-[1280px] mx-auto px-8">
           <motion.div className="text-center mb-20" {...fadeUp}>
-            <h2 className="text-[36px] sm:text-[46px] lg:text-[52px] font-bold text-slate-900 mb-4 leading-[1.1]">
-              Everything you need to scale support
+            <h2 className="text-[52px] font-bold text-slate-900 mb-4 leading-[1.1]">
+              Features built for confident hiring
             </h2>
-            <p className="text-lg sm:text-xl text-slate-600">
-              Powerful automation that feels effortless.
+            <p className="text-[21px] text-slate-600">
+              Less guessing, more doing.
             </p>
           </motion.div>
 
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          <motion.div 
+            className="grid grid-cols-3 gap-6"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -424,83 +446,8 @@ const FixBot = () => {
         </div>
       </section>
 
-      {/* Social Proof */}
-      <section className="py-32 bg-white">
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-8">
-          <motion.div className="text-center mb-16" {...fadeUp}>
-            <h2 className="text-[36px] sm:text-[46px] lg:text-[52px] font-bold text-slate-900 mb-4 leading-[1.1]">
-              Loved by support teams
-            </h2>
-            <p className="text-lg sm:text-xl text-slate-600">
-              Join hundreds of companies reducing ticket volume with FixBot.
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            {[
-              {
-                quote: 'Tickets deflected without hurting CSAT.',
-                body: 'FixBot <strong>cut our support volume by 60%</strong> in the first month while CSAT stayed high because customers self-serve in seconds.',
-                author: 'Sarah Chen',
-                role: 'Head of Support, TechCo',
-                avatar: 'https://i.pravatar.cc/120?img=47'
-              },
-              {
-                quote: 'Docs that stay fresh automatically.',
-                body: 'Every resolved ticket drafts an article for review; our content stays current and <strong>SEO traffic is up 3.2x</strong> after eight weeks.',
-                author: 'Marcus Rivera',
-                role: 'Customer Success Lead, DataFlow',
-                avatar: 'https://i.pravatar.cc/120?img=12'
-              },
-              {
-                quote: 'Feels like hiring a doc team on autopilot.',
-                body: 'Knowledge base updates itself with every fix—<strong>feels like hiring a documentation team on autopilot</strong>. Onboarding is faster because the answers are always current.',
-                author: 'Emily Park',
-                role: 'VP of Operations, CloudSync',
-                avatar: 'https://i.pravatar.cc/120?img=49'
-              }
-            ].map((testimonial, i) => (
-              <motion.div
-                key={i}
-                className="bg-white rounded-[20px] p-8 border border-slate-200 shadow-[0_2px_4px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_16px_rgba(0,0,0,0.08)] transition-all duration-300"
-                variants={staggerItem}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <img
-                    src={testimonial.avatar}
-                    alt={`${testimonial.author} avatar`}
-                    className="w-12 h-12 rounded-full object-cover"
-                  />
-                  <div>
-                    <div className="text-sm font-semibold text-slate-900">
-                      {testimonial.author}
-                    </div>
-                    <div className="text-sm text-slate-600">
-                      {testimonial.role}
-                    </div>
-                  </div>
-                </div>
-                <p className="text-base font-semibold text-slate-900 mb-4">
-                  {testimonial.quote}
-                </p>
-                <p
-                  className="text-sm text-slate-700 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: testimonial.body }}
-                />
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
       {/* Final CTA */}
-      <section className="relative py-28 sm:py-32 overflow-hidden">
+      <section className="relative py-32 overflow-hidden">
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-teal-900 to-cyan-900" />
 
@@ -509,18 +456,18 @@ const FixBot = () => {
         <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-teal-500/30 rounded-full blur-[120px]" />
 
         {/* Content */}
-        <motion.div className="relative max-w-[800px] mx-auto px-6 lg:px-8 text-center" {...fadeUp}>
-          <h2 className="text-[40px] sm:text-[52px] lg:text-[64px] font-bold text-white mb-6 leading-[1.05]">
-            Turn every fix into<br />customer success.
+        <motion.div className="relative max-w-[800px] mx-auto px-8 text-center" {...fadeUp}>
+          <h2 className="text-[64px] font-bold text-white mb-6 leading-[1.05]">
+            See the work.<br />Not the rehearsal.
           </h2>
-          <p className="text-lg sm:text-xl text-emerald-100 mb-10">
-            Start reducing ticket volume in minutes, not months.
+          <p className="text-[21px] text-purple-100 mb-10">
+            Join 200+ teams hiring on proof.
           </p>
-
-          <div className="flex justify-center">
-            <div className="max-w-[560px] w-full">
-              <WaitlistForm variant="dark" />
-            </div>
+          
+          <div className="flex gap-4 justify-center">
+            <button className="h-[56px] px-8 bg-white text-slate-900 text-base font-semibold rounded-[14px] shadow-[0_4px_16px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.3)] hover:scale-[1.02] transition-all duration-200">
+              Join the Waitlist
+            </button>
           </div>
 
           <p className="mt-6 text-sm text-emerald-200">
@@ -530,15 +477,15 @@ No spam, ever.          </p>
 
       {/* Footer */}
       <footer className="bg-slate-900 py-16">
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-400 text-sm">
+        <div className="max-w-[1280px] mx-auto px-8">
+          <div className="flex items-center justify-between text-slate-400 text-sm">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-lg flex items-center justify-center">
                 <Bot className="w-5 h-5 text-white" />
               </div>
               <span className="font-semibold text-white">FixBot</span>
             </div>
-            <div className="flex gap-4 sm:gap-8 flex-wrap justify-center">
+            <div className="flex gap-8">
               <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
               <a href="#" className="hover:text-white transition-colors">Terms</a>
               <a href="#" className="hover:text-white transition-colors">Contact</a>
