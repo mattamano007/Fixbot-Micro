@@ -104,6 +104,7 @@ const FixBot = () => {
             <span className="text-lg font-bold text-slate-900">FixBot</span>
           </div>
           <div className="flex items-center gap-4 lg:gap-8 text-sm font-medium text-slate-600 flex-wrap justify-end w-full sm:w-auto">
+          <div className="flex items-center gap-4 lg:gap-8 text-sm font-medium text-slate-600 flex-wrap justify-end w-full sm:w-auto">
             <a href="#problem" className="hover:text-slate-900 transition-colors">Problem</a>
             <a href="#how-it-works" className="hover:text-slate-900 transition-colors">How It Works</a>
             <a href="#features" className="hover:text-slate-900 transition-colors">Features</a>
@@ -145,7 +146,7 @@ const FixBot = () => {
 
             {/* Right - Floating Dashboard Preview */}
             <motion.div
-              className="relative"
+              className="relative w-full max-w-[520px] mx-auto"
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -154,7 +155,7 @@ const FixBot = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 via-teal-500/20 to-cyan-500/20 blur-[100px] rounded-full scale-150" />
 
               {/* Dashboard Card */}
-              <div className="relative w-[480px] bg-white rounded-[24px] p-8 shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_4px_rgba(0,0,0,0.04),0_8px_16px_rgba(0,0,0,0.06),0_16px_32px_rgba(0,0,0,0.08)] border border-white/60 backdrop-blur-xl">
+              <div className="relative w-full bg-white rounded-[24px] p-6 sm:p-8 shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_4px_rgba(0,0,0,0.04),0_8px_16px_rgba(0,0,0,0.06),0_16px_32px_rgba(0,0,0,0.08)] border border-white/60 backdrop-blur-xl">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                   <div>
@@ -218,9 +219,9 @@ const FixBot = () => {
 
       {/* Stats Bar */}
       <section className="relative z-10 mt-12 mb-24">
-        <div className="max-w-[1100px] mx-auto px-8">
-          <motion.div
-            className="bg-white rounded-[20px] p-8 sm:p-10 shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_8px_16px_rgba(0,0,0,0.08),0_24px_48px_rgba(0,0,0,0.12)] grid grid-cols-1 md:grid-cols-3 gap-8"
+        <div className="max-w-[1100px] mx-auto px-6 sm:px-8">
+          <motion.div 
+            className="bg-white rounded-[20px] p-8 sm:p-10 shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_8px_16px_rgba(0,0,0,0.08),0_24px_48px_rgba(0,0,0,0.12)] grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8"
             {...fadeUp}
           >
             {[
@@ -228,11 +229,14 @@ const FixBot = () => {
               { number: '3.2x', label: 'Increase in organic traffic', sublabel: 'To support content' },
               { number: '<2min', label: 'Average resolution time', sublabel: 'With AI assistance' }
             ].map((stat, i) => (
-              <div key={i} className="text-center border-b md:border-b-0 md:border-r border-slate-200 last:border-0 pb-4 md:pb-0">
-                <div className="text-[56px] font-bold bg-gradient-to-br from-emerald-600 to-teal-600 bg-clip-text text-transparent leading-none mb-2">
+              <div
+                key={i}
+                className="text-center sm:border-r border-slate-200 sm:last:border-0 border-b sm:border-b-0 last:border-b-0 pb-6 sm:pb-0"
+              >
+                <div className="text-[44px] sm:text-[56px] font-bold bg-gradient-to-br from-emerald-600 to-teal-600 bg-clip-text text-transparent leading-none mb-2">
                   {stat.number}
                 </div>
-                <div className="text-[15px] font-semibold text-slate-900 mb-1">
+                <div className="text-[15px] sm:text-[16px] font-semibold text-slate-900 mb-1">
                   {stat.label}
                 </div>
                 <div className="text-[13px] text-slate-600">
