@@ -20,6 +20,11 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+// Ensure any inline/global calls to submitWaitlist don't throw before React mounts.
+if (typeof window !== 'undefined' && !window.submitWaitlist) {
+  window.submitWaitlist = () => false;
+}
+
 const WaitlistForm = ({ variant = 'light', anchorId }) => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState({ state: 'idle', message: '' });
