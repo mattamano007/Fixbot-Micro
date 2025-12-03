@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   ArrowRight,
@@ -24,14 +24,29 @@ const WaitlistForm = ({ variant = 'light', anchorId }) => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState({ state: 'idle', message: '' });
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (!email.trim()) {
-      return setStatus({ state: 'error', message: 'Please enter an email.' });
-    }
-    setStatus({ state: 'success', message: 'Added to waitlist. We will reach out soon.' });
-    setEmail('');
-  };
+  const submitWaitlist = useCallback(
+    (e) => {
+      e?.preventDefault?.();
+      const inputValue = e?.target?.elements?.email?.value ?? email;
+      const trimmedEmail = inputValue?.trim();
+      if (!trimmedEmail) {
+        return setStatus({ state: 'error', message: 'Please enter an email.' });
+      }
+      setStatus({ state: 'success', message: 'Added to waitlist. We will reach out soon.' });
+      setEmail('');
+      return false;
+    },
+    [email]
+  );
+
+  useEffect(() => {
+    window.submitWaitlist = submitWaitlist;
+    return () => {
+      if (window.submitWaitlist === submitWaitlist) {
+        delete window.submitWaitlist;
+      }
+    };
+  }, [submitWaitlist]);
 
   const inputClasses =
     'flex items-center h-[56px] px-4 rounded-[14px] border shadow-[0_1px_2px_rgba(0,0,0,0.04)] focus-within:border-emerald-500 focus-within:shadow-[0_2px_8px_rgba(16,185,129,0.18)] transition-all duration-150 min-w-[280px]';
@@ -45,12 +60,12 @@ const WaitlistForm = ({ variant = 'light', anchorId }) => {
       ? status.state === 'success'
         ? 'text-emerald-100'
         : 'text-red-200'
-      : status.state === 'success'
-        ? 'text-emerald-600'
-        : 'text-red-600';
+        : status.state === 'success'
+          ? 'text-emerald-600'
+          : 'text-red-600';
 
   return (
-    <form id={anchorId} onSubmit={onSubmit} className="flex flex-wrap gap-4 items-center">
+    <form id={anchorId} onSubmit={submitWaitlist} className="flex flex-wrap gap-4 items-center">
       <div
         className={`${inputClasses} ${
           variant === 'dark' ? 'bg-white/90 border-white/30 text-slate-900' : 'bg-white border-slate-300'
@@ -58,6 +73,7 @@ const WaitlistForm = ({ variant = 'light', anchorId }) => {
       >
         <input
           type="email"
+          name="email"
           placeholder="Enter your email"
           className="w-full h-full outline-none text-base text-slate-900 placeholder:text-slate-400 bg-transparent"
           value={email}
