@@ -162,32 +162,7 @@ const FixBot = () => {
                 Give candidates a real task. Get the work, not the rehearsed answer.
               </p>
               
-              <form onSubmit={submitWaitlist} className="flex flex-wrap gap-4 items-center">
-                <div className="flex items-center h-[56px] px-4 bg-white border border-slate-300 rounded-[14px] shadow-[0_1px_2px_rgba(0,0,0,0.04)] focus-within:border-blue-500 focus-within:shadow-[0_2px_8px_rgba(37,99,235,0.18)] transition-all duration-150 min-w-[280px]">
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="w-full h-full outline-none text-base text-slate-900 placeholder:text-slate-400"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={status.state === 'loading'}
-                  className="h-[56px] px-8 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 text-white text-base font-semibold rounded-[14px] shadow-[0_1px_2px_rgba(0,0,0,0.08),0_8px_16px_rgba(37,99,235,0.24)] hover:shadow-[0_1px_2px_rgba(0,0,0,0.08),0_12px_24px_rgba(37,99,235,0.32)] hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-200 inline-flex items-center gap-2"
-                >
-                  {status.state === 'loading' ? 'Joining...' : 'Join the Waitlist'}
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </form>
-              {status.message && (
-                <div className={`mt-3 text-sm ${status.state === 'success' ? 'text-green-600' : 'text-red-600'}`}>
-                  {status.message}
-                </div>
-              )}
+              <WaitlistForm anchorId="waitlist" />
             </motion.div>
 
             {/* Right - Floating Scorecard */}
@@ -485,10 +460,10 @@ const FixBot = () => {
             Join 200+ teams hiring on proof.
           </p>
           
-          <div className="flex gap-4 justify-center">
-            <button className="h-[56px] px-8 bg-white text-slate-900 text-base font-semibold rounded-[14px] shadow-[0_4px_16px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.3)] hover:scale-[1.02] transition-all duration-200">
-              Join the Waitlist
-            </button>
+          <div className="flex justify-center">
+            <div className="max-w-[560px] w-full">
+              <WaitlistForm variant="dark" />
+            </div>
           </div>
 
           <p className="mt-6 text-sm text-emerald-200">
